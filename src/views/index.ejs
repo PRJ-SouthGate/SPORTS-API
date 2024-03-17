@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Search</title>
+</head>
+
+<body>
+    <h1>Player Search</h1>
+    <form id="searchForm">
+        <input type="text" name="playerName" placeholder="Enter player name">
+        <button type="submit">Search</button>
+    </form>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // 기본 폼 제출 이벤트 방지
+            var playerName = this.playerName.value; // 폼 내 입력된 선수 이름 가져오기
+            var actionPath = '/soccer/player/' + encodeURIComponent(playerName); // URL 생성
+            window.location.href = actionPath; // 생성된 URL로 페이지 이동
+        });
+    </script>
+</body>
+
+</html>

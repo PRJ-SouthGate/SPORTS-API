@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= playerName %> Profile
+    </title>
+</head>
+
+<body>
+    <h1>
+        <%= playerName %> Profile
+    </h1>
+    <h2>Statistics</h2>
+    <% stats.forEach(function(stat) { %>
+        <div>
+            <p>Season: <%= stat.season %>
+            </p>
+            <p>Team: <%= stat.teamName %>
+            </p>
+            <p>Goals: <%= stat.goals %>
+            </p>
+            <p>Assists: <%= stat.assists %>
+            </p>
+            <p>Rating: <%=stat.rating%>
+            </p>
+            <!-- 기타 통계 정보를 여기에 추가 -->
+        </div>
+        <% }); %>
+            <form action="/soccer/updatePlayerStats" method="post">
+                <input type="hidden" name="playerName" value="<%= playerName %>">
+                <button type="submit">Update Stats</button>
+            </form>
+</body>
+
+</html>
