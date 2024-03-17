@@ -1,26 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Search</title>
 </head>
-
 <body>
     <h1>Player Search</h1>
     <form id="searchForm">
+        
+        <select name="league">
+            <option value="">Select League</option>
+            <option value="2">UEFA Champions League</option>
+            <option value="3">UEFA Europa League</option>
+            <option value="848">UEFA Europa Conference League</option>
+            <option value="39">Premier League</option>
+            <option value="140">La Liga</option>
+            <option value="61">Ligue 1</option>
+            <option value="185">Serie A</option> <!-- 수정된 고유번호 -->
+            <option value="78">Bundesliga</option>
+            <option value="253">Major League Soccer</option>
+            <option value="307">Saudi Professional League</option>
+            <option value="88">Eredivisie</option>
+            <option value="94">Primeira Liga</option>
+            <option value="292">K League</option>
+            <option value="98">J League</option>
+            <option value="17">AFC Champions League</option>
+            <option value="71">Campeonato Brasileiro Série A</option>
+        </select>
         <input type="text" name="playerName" placeholder="Enter player name">
+        <!-- 리그 선택 드롭다운 메뉴 추가, 수정된 리그 고유번호 사용 -->
         <button type="submit">Search</button>
     </form>
     <script>
         document.getElementById('searchForm').addEventListener('submit', function (event) {
             event.preventDefault(); // 기본 폼 제출 이벤트 방지
             var playerName = this.playerName.value; // 폼 내 입력된 선수 이름 가져오기
-            var actionPath = '/soccer/player/' + encodeURIComponent(playerName); // URL 생성
+            var leagueId = this.league.value; // 선택된 리그의 고유번호 가져오기
+            var actionPath = '/soccer/player/' + encodeURIComponent(playerName) + '?leagueId=' + encodeURIComponent(leagueId); // URL 생성
             window.location.href = actionPath; // 생성된 URL로 페이지 이동
         });
     </script>
 </body>
-
 </html>

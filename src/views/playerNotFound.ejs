@@ -9,6 +9,12 @@
 <body>
     <h1>Player Not Found</h1>
     <p>We could not find any statistics for <%= playerName %>.</p>
+    <form action="/soccer/updatePlayerStats" method="post">
+        <input type="hidden" name="playerName" value="<%= playerName %>">
+        <!-- leagueId를 숨겨진 입력 필드로 추가 -->
+        <input type="hidden" name="leagueId" value="<%= leagueId %>">
+        <button type="submit">Update Stats</button>
+    </form>
 </body>
 
 </html>
