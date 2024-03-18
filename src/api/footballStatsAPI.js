@@ -1,32 +1,58 @@
-require('dotenv').config();
-const axios = require('axios');
+require("dotenv").config();
+const axios = require("axios");
+const { name } = require("ejs");
 
 // 함수를 async로 선언하여 내부에서 await 사용 가능
 async function fetchPlayerStats(playerName, targetLeague) {
-    console.log(targetLeague + typeof (targetLeague));
     const options = {
-        method: 'GET',
+        method: "GET",
         // URL을 동적으로 구성하여 playerName에 따라 다른 결과를 가져올 수 있도록 합니다.
         url: process.env.API_URL,
         params: {
             league: targetLeague,
-            search: playerName
+            search: playerName, // 검색 쿼리에 사용할 이름인데 되는 이름과 안되는 이름의 기준이 명확하지 않음. 추후 기준 확인 필요
         }, // 검색 쿼리에 playerName 사용
         headers: {
-            'X-RapidAPI-Key': process.env.API_KEY, // 여기에 실제 RapidAPI 키 입력
-            'X-RapidAPI-Host': process.env.API_HOST
-        }
+            "X-RapidAPI-Key": process.env.API_KEY, // 여기에 실제 RapidAPI 키 입력
+            "X-RapidAPI-Host": process.env.API_HOST,
+        },
     };
 
     try {
         const response = await axios.request(options);
-        console.log(response.data);
-        // 필요한 데이터만을 반환하도록 데이터를 처리합니다.
-        // 예를 들어, 반환 데이터 중 players 정보만을 필터링하여 반환할 수 있습니다.
-        // 실제 데이터 구조에 따라 접근 방법이 달라질 수 있습니다.
-        return response.data.response; // 예시로 response 객체의 response 프로퍼티 반환
+        const playerInfo = response.data.response[0]; // 선수 정보에 접근
+        const statistics = playerInfo.statistics[0]; // 리그의 통계 정보에 접근
+        const name = playerInfo.player.name
+            .replace(/[^a-zA-Z0-9 ]/g, " ")
+            .replace(/\s+/g, " "); // 이름에서 특수문자 공백으로 대체 후 연속 공백 제거
+        const stats = {
+            // 반환할 데이터 구조를 정의
+            playerId: playerInfo.player.id, // 선수의 고유 ID
+            season: statistics.league.season.toString(), // 대상 시즌을 문자열로 변환
+            goals: statistics.goals.total, // 넣은 골 수
+            assists: statistics.goals.assists, // 기록한 어시스트 수
+            rating: statistics.games.rating, // 평가 점수
+            teamId: statistics.team.id, // 소속된 팀의 고유 ID
+            name: name, // 선수의 이름
+            leagueId: statistics.league.id, // 대상 리그의 고유 ID
+            appearances: statistics.games.appearences, // 출장 횟수
+            minutesPlayed: statistics.games.minutes, // 출장 시간
+            yellowCards: statistics.cards.yellow, // 경고 수
+            redCards: statistics.cards.red, // 퇴장 수
+            lineups: statistics.games.lineups, // 선발 출장 수
+            firstname: playerInfo.player.firstname, // 선수의 이름
+            lastname: playerInfo.player.lastname, // 선수의 성
+            age: playerInfo.player.age, // 선수의 나이
+            birth_date: playerInfo.player.birth.date, // 선수의 생년월일
+            nationality: playerInfo.player.nationality, // 선수의 국적
+            height: playerInfo.player.height, // 선수의 키
+            weight: playerInfo.player.weight, // 선수의 몸무게
+            photo: playerInfo.player.photo, // 선수의 사진 URL
+        };
+        console.log(stats);
+        return stats; // stats 객체 반환
     } catch (error) {
-        console.error(error);
+        console.error("error", error);
         throw error; // 에러를 적절히 처리하거나, 필요에 따라 상위로 전파
     }
 }
