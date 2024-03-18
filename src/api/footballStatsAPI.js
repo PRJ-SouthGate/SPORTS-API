@@ -2,7 +2,8 @@ require('dotenv').config();
 const axios = require('axios');
 
 // 함수를 async로 선언하여 내부에서 await 사용 가능
-async function fetchPlayerStats(playerName) {
+async function fetchPlayerStats(playerName, targetLeague) {
+    console.log(targetLeague + typeof (targetLeague));
     const options = {
         method: 'GET',
         // URL을 동적으로 구성하여 playerName에 따라 다른 결과를 가져올 수 있도록 합니다.

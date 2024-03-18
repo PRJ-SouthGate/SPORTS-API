@@ -8,16 +8,17 @@ const { fetchPlayerStats } = require('../api/footballStatsAPI');
 // 선수 프로필 페이지 라우트
 router.get('/player/:playerName', async (req, res) => {
     const playerName = req.params.playerName;
-
+    const leagueId = req.query.leagueId
+    console.log(leagueId + typeof (leagueId));
     try {
         const playerStats = await getPlayerStats(playerName);
 
         if (playerStats && playerStats.length > 0) {
             // 플레이어 통계 정보가 있는 경우, 프로필 페이지 렌더링
-            res.render('playerProfile', { playerName: playerName, stats: playerStats });
+            res.render('playerProfile', { playerName: playerName, stats: playerStats, leagueId: leagueID });
         } else {
             // 플레이어 통계 정보가 없는 경우, 사용자에게 알림
-            res.render('playerNotFound', { playerName: playerName });
+            res.render('playerNotFound', { playerName: playerName, leagueId: leagueId });
         }
     } catch (error) {
         console.error(error);
@@ -27,8 +28,9 @@ router.get('/player/:playerName', async (req, res) => {
 
 router.post('/updatePlayerStats', async (req, res) => {
     const playerName = req.body.playerName;
+    const leagueID = req.body.leagueId;
     try {
-        const stats = await fetchPlayerStats(playerName);
+        const stats = await fetchPlayerStats(playerName, leagueID);
         await updatePlayerStats(stats);
         res.redirect(`/player/${playerName}`);
     } catch (error) {
