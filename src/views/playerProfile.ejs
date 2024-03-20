@@ -1,28 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title><%= stats[0].playerName %> Profile</title>
-    </head>
-    <body>
-        <h1><%= stats[0].playerName %> Profile</h1>
-        <h2>Statistics</h2>
-        <% stats.forEach(function(stat) { %>
-        <div>
-            <p>Season: <%= stat.season %></p>
-            <p>Team: <%= stat.teamName %></p>
-            <p>Goals: <%= stat.goals %></p>
-            <p>Assists: <%= stat.assists %></p>
-            <p>Rating: <%= stat.rating %></p>
-            <!-- 기타 통계 정보를 여기에 추가 -->
-        </div>
-        <% }); %>
-        <form action="/soccer/updatePlayerStats" method="post">
-            <input type="hidden" name="playerName" value="<%= playerName %>" />
-            <!-- leagueId를 숨겨진 입력 필드로 추가 -->
-            <input type="hidden" name="leagueId" value="<%= leagueId %>" />
-            <input type="hidden" name="existence" value="<%= existence %>" />
-            <button type="submit">Update Stats</button>
-        </form>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <title><%= stats[0].playerName %> Profile</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .stats-container {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .stats-container p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        form {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= stats[0].playerName %> Profile</h1>
+    <h2>Statistics</h2>
+    <% stats.forEach(function(stat) { %>
+    <div class="stats-container">
+        <img src="<%= stat.image %>" class="img-thumbnail" alt="manager">
+        <p>Season: <%= stat.season %></p>
+        <p>Team: <%= stat.teamName %></p>
+        <p>Goals: <%= stat.goals %></p>
+        <p>Assists: <%= stat.assists %></p>
+        <p>Rating: <%= stat.rating %></p>
+        <!-- Additional statistics info can be added here -->
+    </div>
+    <% }); %>
+    <form action="/soccer/updatePlayerStats" method="post">
+        <input type="hidden" name="playerName" value="<%= playerName %>" />
+        <input type="hidden" name="leagueId" value="<%= leagueId %>" />
+        <input type="hidden" name="existence" value="<%= existence %>" />
+        <button type="submit">Update Stats</button>
+    </form>
+</body>
 </html>

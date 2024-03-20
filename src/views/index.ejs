@@ -4,11 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Search</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #searchForm {
+            max-width: 500px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #searchForm select,
+        #searchForm input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Added for consistent box sizing */
+        }
+
+        #searchForm button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #searchForm button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>Player Search</h1>
     <form id="searchForm">
-        
         <select name="league">
             <option value="">Select League</option>
             <option value="2">UEFA Champions League</option>
@@ -17,7 +62,7 @@
             <option value="39">Premier League</option>
             <option value="140">La Liga</option>
             <option value="61">Ligue 1</option>
-            <option value="185">Serie A</option> <!-- 수정된 고유번호 -->
+            <option value="185">Serie A</option>
             <option value="78">Bundesliga</option>
             <option value="253">Major League Soccer</option>
             <option value="307">Saudi Professional League</option>
@@ -29,16 +74,15 @@
             <option value="71">Campeonato Brasileiro Série A</option>
         </select>
         <input type="text" name="playerName" placeholder="Enter player name">
-        <!-- 리그 선택 드롭다운 메뉴 추가, 수정된 리그 고유번호 사용 -->
         <button type="submit">Search</button>
     </form>
     <script>
         document.getElementById('searchForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // 기본 폼 제출 이벤트 방지
-            var playerName = this.playerName.value; // 폼 내 입력된 선수 이름 가져오기
-            var leagueId = this.league.value; // 선택된 리그의 고유번호 가져오기
-            var actionPath = '/soccer/player/' + encodeURIComponent(playerName) + '?leagueId=' + encodeURIComponent(leagueId); // URL 생성
-            window.location.href = actionPath; // 생성된 URL로 페이지 이동
+            event.preventDefault();
+            var playerName = this.playerName.value;
+            var leagueId = this.league.value;
+            var actionPath = '/soccer/player/' + encodeURIComponent(playerName) + '?leagueId=' + encodeURIComponent(leagueId);
+            window.location.href = actionPath;
         });
     </script>
 </body>

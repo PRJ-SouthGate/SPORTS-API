@@ -102,7 +102,7 @@ async function updatePlayerStats(stats) {
 async function getPlayerStats(playerName) {
     // 플레이어 이름을 인자로 받아서 해당 플레이어의 통계를 반환하는 함수
     const query = `
-        SELECT ps.season, ps.goals, ps.assists, ps.rating, t.name AS teamName, p.name AS playerName
+        SELECT ps.season, ps.goals, ps.assists, ps.rating, t.name AS teamName, p.name AS playerName, p.photo AS image
         FROM player_stats ps
         JOIN teams t ON ps.teamId = t.id
         JOIN players p ON ps.playerId = p.id
