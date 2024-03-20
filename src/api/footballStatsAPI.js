@@ -23,7 +23,7 @@ async function fetchPlayerStats(playerName, targetLeague) {
         const playerInfo = response.data.response[0]; // 선수 정보에 접근
         const statistics = playerInfo.statistics[0]; // 리그의 통계 정보에 접근
         const name = playerInfo.player.name
-            .replace(/[^a-zA-Z0-9 ]/g, " ")
+            .replace(/[^a-zA-Z0-9 ]/g, "")
             .replace(/\s+/g, " "); // 이름에서 특수문자 공백으로 대체 후 연속 공백 제거
         const stats = {
             // 반환할 데이터 구조를 정의
