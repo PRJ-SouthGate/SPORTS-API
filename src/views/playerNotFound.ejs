@@ -1,19 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Player Not Found</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Player Not Found</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet"> <!-- 나눔손글씨 붓 폰트 추가 -->
+    <style>
+        body {
+            font-family: 'Nanum Brush Script', cursive; /* 나눔손글씨 붓으로 폰트 변경 */
+            background-color: #FFC0CB; /* 연분홍색 배경 */
+            text-align: center;
+            padding: 50px;
+        }
 
-    <body>
-        <h1>Player Not Found</h1>
-        <p>We could not find any statistics for <%= playerName %>.</p>
-        <form action="/soccer/updatePlayerStats" method="post">
-            <input type="hidden" name="playerName" value="<%= playerName %>" />
-            <!-- leagueId를 숨겨진 입력 필드로 추가 -->
-            <input type="hidden" name="leagueId" value="<%= leagueId %>" />
-            <input type="hidden" name="existence" value="<%= existence %>" />
-            <button type="submit">Update Stats</button>
-        </form>
-    </body>
+        h1 {
+            color: #E91E63; /* 진한 핑크색 */
+            font-size: 28px;
+        }
+
+        p {
+            color: #444; /* 더 어둡게 */
+            font-size: 18px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="hidden"] {
+            display: none;
+        }
+
+        button {
+            background-color: #FF69B4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #FFB6C1;
+        }
+
+        .message {
+            font-size: 20px;
+            color: #E91E63;
+            margin-top: 10px;
+            display: inline-block;
+            vertical-align: top;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>😢 플레이어를 찾을 수 없습니다!</h1>
+    <p><%= playerName %>의 통계를 찾을 수 없어요.</p>
+    <form action="/soccer/updatePlayerStats" method="post" style="display: inline-block;">
+        <input type="hidden" name="playerName" value="<%= playerName %>" />
+        <input type="hidden" name="leagueId" value="<%= leagueId %>" />
+        <input type="hidden" name="existence" value="<%= existence %>" />
+        <button type="submit">딸깍</button>
+    </form>
+    <span class="message">뿌우 딸깍 딸깍! 얼마나 쉬워요??</span>
+</body>
 </html>
