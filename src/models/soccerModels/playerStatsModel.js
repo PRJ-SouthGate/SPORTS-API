@@ -99,8 +99,9 @@ async function updatePlayerStats(stats) {
     }
 }
 
-async function getPlayerStats(playerName) {
+async function getPlayerStatsByName(playerName) {
     // 플레이어 이름을 인자로 받아서 해당 플레이어의 통계를 반환하는 함수
+    console.log("Get Player Stats");
     const query = `
         SELECT ps.season, ps.goals, ps.assists, ps.rating, t.name AS teamName, p.name AS playerName, p.photo AS image
         FROM player_stats ps
@@ -110,7 +111,7 @@ async function getPlayerStats(playerName) {
             SELECT id FROM players WHERE name LIKE CONCAT('%', ?, '%')
         )
     `; // 쿼리 템플릿
-
+    // console.log("Executing query:", query, "with playerName:", playerName);
     try {
         const [rows, fields] = await db.query(query, [playerName]);
         console.log("Fetching player stats", rows);
@@ -121,4 +122,25 @@ async function getPlayerStats(playerName) {
     }
 }
 
-module.exports = { updatePlayerStats, getPlayerStats, insertPlayerStats };
+async function getPlayerIdByName(playerName) {
+    console.log("getPlayerIdByName is called");
+    const query = `
+        SELECT id FROM players 
+        WHERE name LIKE CONCAT('%', ?, '%')
+    `;
+
+    try {
+        const [rows] = await db.query(query, [playerName]);
+        console.log(rows);
+        if (rows.length > 0) {
+            return rows[0].id;
+        } else {
+            return null; // 선수가 데이터베이스에 없을 경우
+        }
+    } catch (error) {
+        console.error("Error fetching player ID by name:", error);
+        throw error;
+    }
+}
+
+module.exports = { updatePlayerStats, getPlayerStatsByName, insertPlayerStats, getPlayerIdByName };
