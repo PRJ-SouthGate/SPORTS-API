@@ -14,6 +14,7 @@ async function insertPlayerStats(stats) {
         leagueId,
         appearances,
         minutesPlayed,
+        position,
         yellowCards,
         redCards,
         lineups,
@@ -28,9 +29,9 @@ async function insertPlayerStats(stats) {
     } = stats;
     const query_stats = `
         INSERT INTO player_stats
-        (playerId, season, goals, assists, rating, teamId, leagueId, appearances, minutesPlayed, yellowCards, redCards, lineups)
+        (playerId, season, goals, assists, rating, teamId, leagueId, appearances, minutesPlayed, yellowCards, redCards, lineups,position)
         VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        (?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?);
     `; // 쿼리 템플릿
     const query_players = `
         INSERT INTO players (id, name, firstname, lastname, age, birth_date, nationality, height, weight, photo)
@@ -52,7 +53,7 @@ async function insertPlayerStats(stats) {
         ]);
         console.log("Inserting successful", result);
     } catch (error) {
-        console.error("Error inserting player stats", error);
+        console.error("Error inserting player info", error);
     }
     try {
         const [result] = await db.execute(query_stats, [
@@ -68,6 +69,7 @@ async function insertPlayerStats(stats) {
             yellowCards,
             redCards,
             lineups,
+            position,
         ]);
         console.log("Inserting successful", result);
     } catch (error) {
@@ -77,21 +79,24 @@ async function insertPlayerStats(stats) {
 
 async function updatePlayerStats(stats) {
     // stats 객체를 인자로 받아서 데이터베이스에 업데이트하는 함수
-    const { playerId, season, goals, assists, rating } = stats; // stats 객체에서 필요한 속성들을 추출
-
+    const { playerId, season, goals, assists, rating, position, appearances, lineups } = stats; // stats 객체에서 필요한 속성들을 추출
     const query = `
         UPDATE player_stats
-        SET goals = ?, assists = ?, rating = ?
+        SET goals = ?, assists = ?, rating = ?, position = ?, appearances = ?, lineups = ?
         WHERE playerId = ? AND season = ?;
-    `; // 쿼리 템플릿
+    `; // 쿼리 템플릿 
 
     try {
         const [result] = await db.execute(query, [
             goals,
             assists,
             rating,
+            position, appearances, lineups,
             playerId,
             season,
+
+
+
         ]);
         console.log("Update successful", result);
     } catch (error) {
@@ -103,7 +108,7 @@ async function getPlayerStatsByName(playerName) {
     // 플레이어 이름을 인자로 받아서 해당 플레이어의 통계를 반환하는 함수
     console.log("Get Player Stats");
     const query = `
-        SELECT ps.season, ps.goals, ps.assists, ps.rating, t.name AS teamName, p.name AS playerName, p.photo AS image
+        SELECT ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position, t.name AS teamName, p.name AS playerName, p.photo AS image
         FROM player_stats ps
         JOIN teams t ON ps.teamId = t.id
         JOIN players p ON ps.playerId = p.id

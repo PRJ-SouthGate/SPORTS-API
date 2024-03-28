@@ -35,6 +35,7 @@ async function fetchPlayerStatsByName(playerName, targetLeague) {
             leagueId: statistics.league.id, // 대상 리그의 고유 ID
             appearances: statistics.games.appearences, // 출장 횟수
             minutesPlayed: statistics.games.minutes, // 출장 시간
+            position: statistics.games.position, // 포지션
             yellowCards: statistics.cards.yellow, // 경고 수
             redCards: statistics.cards.red, // 퇴장 수
             lineups: statistics.games.lineups, // 선발 출장 수
@@ -57,20 +58,20 @@ async function fetchPlayerStatsByName(playerName, targetLeague) {
 
 async function fetchPlayerStatsById(playerId, targetLeague) {
     console.log("FetchingPlayerStatsByID");
-    console.log(playerId,targetLeague);
+    console.log(playerId, targetLeague);
     const options = {
         method: 'GET',
         url: process.env.API_URL,
         params: {
-          id: playerId, // 함수 파라미터로 받은 선수 ID
-          league: targetLeague,
-          season : "2023",
+            id: playerId, // 함수 파라미터로 받은 선수 ID
+            league: targetLeague,
+            season: "2023",
         },
         headers: {
-          'X-RapidAPI-Key': process.env.API_KEY, // 환경 변수에서 API 키를 가져옵니다.
-          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+            'X-RapidAPI-Key': process.env.API_KEY, // 환경 변수에서 API 키를 가져옵니다.
+            'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
         }
-      };
+    };
 
     try {
         const response = await axios.request(options);
@@ -89,6 +90,7 @@ async function fetchPlayerStatsById(playerId, targetLeague) {
             leagueId: statistics.league.id, // 대상 리그의 고유 ID
             appearances: statistics.games.appearences, // 출장 횟수
             minutesPlayed: statistics.games.minutes, // 출장 시간
+            position: statistics.games.position, // 포지션
             yellowCards: statistics.cards.yellow, // 경고 수
             redCards: statistics.cards.red, // 퇴장 수
             lineups: statistics.games.lineups, // 선발 출장 수
