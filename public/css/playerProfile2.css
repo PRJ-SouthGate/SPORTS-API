@@ -1,0 +1,250 @@
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    background-color: #2b6cb0;
+    /* 네비게이션 바의 배경색 */
+    color: white;
+    padding: 10px 20px;
+    /* 상하단 여백 추가 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* 네비게이션 바에 그림자 효과 추가 */
+}
+
+.home-button img {
+    height: 30px;
+    /* 홈 버튼 이미지 크기 */
+    width: 30px;
+}
+
+.search-container form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* 요소 사이의 간격 */
+}
+
+.league-dropdown {
+    padding: 5px 10px;
+    /* 드롭다운 내부 여백 조정 */
+    width: 150px;
+    /* 드롭다운 폭 조정 */
+    border: 1px solid #ddd;
+    /* 테두리 스타일 */
+    border-radius: 5px;
+    /* 모서리 둥글게 */
+    background-color: white;
+    /* 배경색 */
+    color: #333;
+    /* 글자색 */
+}
+
+.search-container input {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-container button {
+    background-color: #4A5568;
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: #2C5282;
+    /* 버튼 호버 효과 */
+}
+
+/* 컨테이너 전체 레이아웃 */
+.container {
+    display: flex;
+    align-items: stretch;
+    /* 자식 요소들을 상단에 정렬 */
+    gap: 20px;
+    /* 플레이어 카드와 스탯 컨테이너 사이의 간격 */
+    margin-top: 20px;
+}
+
+.stats-container {
+    background: #2b6cb0;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.player-card {
+    width: 30%;
+    /* 컨테이너의 30% 공간을 차지 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: #2b6cb0;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    /* 포지션 레이블을 절대 위치로 설정하기 위한 기준점 */
+}
+
+.player-top-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 중앙 정렬 */
+    position: relative;
+    /* 포지션 레이블을 절대 위치로 설정하기 위한 기준점 */
+    width: 90%;
+}
+
+.player-img {
+    /* 이미지를 둘러싼 컨테이너에 대한 스타일. 이미지 자체에 margin auto가 필요 없으므로 제거 */
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.player-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.player-position {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(20%, -50%);
+    font-size: 0.9em;
+    /* 글자 크기를 조금 줄임 */
+    font-weight: 500;
+    /* 글자 굵기를 500으로 조정 */
+    color: #FFFFFF;
+    /* 글자 색상은 백색으로 설정 */
+    background-color: transparent;
+    /* 배경색을 투명하게 설정 */
+    padding: 5px;
+    /* 적절한 패딩으로 레이블 간격 조정 */
+    border: 2px solid #FFFFFF;
+    /* 흰색 테두리 추가 */
+    border-radius: 5px;
+    /* 경계선 둥글기 */
+    letter-spacing: 1px;
+    /* 글자 간격 */
+    text-transform: uppercase;
+    /* 대문자로 표시 */
+    z-index: 1;
+}
+
+.flag-and-logo {
+    display: flex;
+    justify-content: center;
+    /* 로고와 국기를 중앙에 배치 */
+    padding-top: 10px;
+    /* 선수 사진과 간격을 두기 위해 추가 */
+}
+
+.flag-and-logo img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.stats-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* 항목들을 세로 방향으로 정렬 */
+    background: #2b6cb0;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.season-info {
+    margin-bottom: 10px;
+    /* 시즌 정보와 스탯 항목 사이의 간격 */
+    /* 나머지 스타일은 기존대로 유지 */
+}
+
+.stats-items {
+    display: flex;
+    flex-direction: row;
+    /* 가로 방향으로 스탯 항목들을 나열 */
+    gap: 15px;
+    /* 스탯 항목들 사이의 간격 */
+    flex-wrap: wrap;
+    /* 필요시 항목들을 다음 줄로 넘김 */
+}
+
+.stats-item {
+    /* 각 스탯 항목에 적용될 스타일 */
+    background: rgba(255, 255, 255, 0.2);
+    /* 스탯 항목 배경을 반투명으로 설정 */
+    padding: 10px 15px;
+    /* 적당한 패딩으로 내용 감싸기 */
+    border-radius: 5px;
+    /* 스탯 항목 모서리 둥글게 */
+    min-width: 100px;
+    /* 최소 너비 설정 */
+    text-align: center;
+    /* 텍스트 중앙 정렬 */
+}
+
+.season-info {
+    font-size: 1.2em;
+    /* 글자 크기를 적당히 조정 */
+    color: #FFF;
+    /* 글자 색상을 흰색으로 설정 */
+    margin-bottom: 15px;
+    /* 다음 스탯 항목과의 간격 */
+    padding: 10px;
+    /* 내부 여백 */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* 반투명 배경 */
+    border-radius: 5px;
+    /* 모서리 둥글게 */
+    width: fit-content;
+    /* 내용에 맞게 너비 조정 */
+    margin: 0 auto 15px;
+    /* 가운데 정렬 및 하단 마진 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* 약간의 그림자 효과 */
+}
+
+.update-stats-form {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.update-stats-button {
+    padding: 10px 20px;
+    background-color: #4A5568;
+    /* 다크 그레이/네이비 색상 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-stats-button:hover {
+    background-color: #2C5282;
+    /* 밝은 파란색으로 호버 효과 */
+}
