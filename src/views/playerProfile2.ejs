@@ -1,103 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><%= stats[0].playerName %> Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/playerProfile2.css"> 
-</head>
-<body>
-    <nav class = "top-bar">
-        <a href="/" class="home-button">
-            <img src="/img/home.svg" alt="Home" style="height: 50px; width: 50px;">
-        </a>
-        <div class="search-container">
-            <form id="searchForm">
-                <select name="league" class="league-dropdown">
-                    <option value="">Select League</option>
-                    <option value="2">UEFA Champions League</option>
-                    <option value="3">UEFA Europa League</option>
-                    <option value="848">UEFA Europa Conference League</option>
-                    <option value="39">Premier League</option>
-                    <option value="140">La Liga</option>
-                    <option value="61">Ligue 1</option>
-                    <option value="185">Serie A</option>
-                    <option value="78">Bundesliga</option>
-                    <option value="253">Major League Soccer</option>
-                    <option value="307">Saudi Professional League</option>
-                    <option value="88">Eredivisie</option>
-                    <option value="94">Primeira Liga</option>
-                    <option value="292">K League</option>
-                    <option value="98">J League</option>
-                    <option value="17">AFC Champions League</option>
-                    <option value="71">Campeonato Brasileiro Série A</option>
-                </select>
-                <input type="text" placeholder="Search for players..." name="playerName">
-                
-                <button type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
-    <!-- 검색창 동작을 위한 스크립트 -->
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var playerName = this.playerName.value;
-            var leagueId = this.league.value;
-            var actionPath = '/soccer/player/' + encodeURIComponent(playerName) + '?leagueId=' + encodeURIComponent(leagueId);
-            window.location.href = actionPath;
-        });
-    </script>
 
-    <% stats.forEach(function(stat) { %>
-        <div class="container">
-            <div class="player-card">
-                <div class="player-top-section">
-                    <div class="player-position"><%= stat.position === 'Midfielder' ? 'MID' : stat.position === 'Attacker' ? 'ATT' : stat.position === 'Defender' ? 'DEF' : 'GK' %></div>
-                    <img src="<%= stat.image %>" alt="Player Image" class="player-img">
-                </div>
-                <div class="player-info">
-                    <div class="player-name"><%= stat.playerName %></div>
-                    <div class="flag-and-logo">
-                        <img src="path_to_country_flag.png" alt="Country Flag" class="player-flag">
-                        <img src="path_to_team_logo.png" alt="Team Logo" class="team-logo">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="stats-container">
-                <div class="season-info">Season: <%= stat.season %></div>
-                <div class="stats-items"> <!-- 스탯 항목들을 가로로 나열하기 위한 컨테이너 -->
-                    <div class="stats-item">
-                        <p>Appearances</p>
-                        <p><%= stat.appearances %></p>
-                    </div>
-                    <div class="stats-item">
-                        <p>Goals</p>
-                        <p><%= stat.goals %></p>
-                    </div>
-                    <div class="stats-item">
-                        <p>Assists</p>
-                        <p><%= stat.assists %></p>
-                    </div>
-                    <div class="stats-item">
-                        <p>Rating</p>
-                        <p><%= stat.rating %></p>
-                    </div>
-                    <!-- 기타 스탯 추가 가능 -->
-                </div>
-                <form action="/soccer/updatePlayerStats" method="post" class="update-stats-form">
-                    <input type="hidden" name="playerName" value="<%= playerName %>" />
-                    <input type="hidden" name="leagueId" value="<%= leagueId %>" />
-                    <input type="hidden" name="season" value="<%= stat.season %>" />
-                    <button type="submit" class="update-stats-button">Update Stats</button>
-                </form>
-            </div>
-            <!-- 기타 스탯 추가 가능 -->
-            
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <title><%= stats[0].playerName %> Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/playerProfile2.css">
+</head>
+
+<body>
+  <nav class="top-bar">
+    <a href="/" class="home-button">
+      <img src="/img/home.svg" alt="Home" style="height: 50px; width: 50px;">
+    </a>
+    <div class="search-container">
+      <form id="searchForm">
+        <select name="league" class="league-dropdown">
+          <option value="">Select League</option>
+          <option value="2">UEFA Champions League</option>
+          <option value="3">UEFA Europa League</option>
+          <option value="848">UEFA Europa Conference League</option>
+          <option value="39">Premier League</option>
+          <option value="140">La Liga</option>
+          <option value="61">Ligue 1</option>
+          <option value="185">Serie A</option>
+          <option value="78">Bundesliga</option>
+          <option value="253">Major League Soccer</option>
+          <option value="307">Saudi Professional League</option>
+          <option value="88">Eredivisie</option>
+          <option value="94">Primeira Liga</option>
+          <option value="292">K League</option>
+          <option value="98">J League</option>
+          <option value="17">AFC Champions League</option>
+          <option value="71">Campeonato Brasileiro Série A</option>
+        </select>
+        <input type="text" placeholder="Search for players..." name="playerName">
+
+        <button type="submit">Search</button>
+      </form>
     </div>
-    <% }); %>
-    
+  </nav>
+  <!-- 검색창 동작을 위한 스크립트 -->
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var playerName = this.playerName.value;
+      var leagueId = this.league.value;
+      var actionPath = '/soccer/player/' + encodeURIComponent(playerName) + '?leagueId=' + encodeURIComponent(leagueId);
+      window.location.href = actionPath;
+    });
+  </script>
+
+  <% stats.forEach(function(stat) { %>
+  <div class="container">
+    <div class="player-card">
+      <div class="player-top-section">
+        <div class="player-position"><%= stat.position === 'Midfielder' ? 'MID' : stat.position === 'Attacker' ? 'ATT' : stat.position === 'Defender' ? 'DEF' : 'GK' %></div>
+        <img src="<%= stat.image %>" alt="Player Image" class="player-img">
+      </div>
+      <div class="player-info">
+        <div class="player-name"><%= stat.playerName %></div>
+        <div class="flag-and-logo">
+          <img src="path_to_country_flag.png" alt="Country Flag" class="player-flag">
+          <img src="path_to_team_logo.png" alt="Team Logo" class="team-logo">
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-container">
+      <div class="season-info">Season: <%= stat.season %></div>
+      <div class="stats-items">
+        <!-- 스탯 항목들을 가로로 나열하기 위한 컨테이너 -->
+        <div class="stats-item">
+          <p>Appearances</p>
+          <p><%= stat.appearances %></p>
+        </div>
+        <div class="stats-item">
+          <p>Goals</p>
+          <p><%= stat.goals %></p>
+        </div>
+        <div class="stats-item">
+          <p>Assists</p>
+          <p><%= stat.assists %></p>
+        </div>
+        <div class="stats-item">
+          <p>Rating</p>
+          <p><%= stat.rating %></p>
+        </div>
+        <!-- 기타 스탯 추가 가능 -->
+        <form action="/soccer/updatePlayerStats" method="post" class="update-stats-form">
+          <input type="hidden" name="playerName" value="<%= playerName %>" />
+          <input type="hidden" name="leagueId" value="<%= leagueId %>" />
+          <input type="hidden" name="season" value="<%= stat.season %>" />
+          <button type="submit" class="update-stats-button">Update Stats</button>
+        </form>
+      </div>
+
+    </div>
+    <!-- 기타 스탯 추가 가능 -->
+
+  </div>
+  </div>
+  <% }); %>
+
 </body>
+
 </html>

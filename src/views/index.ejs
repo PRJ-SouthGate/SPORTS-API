@@ -1,109 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Search</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #edf2f7; /* Light gray background */
-        }
-
-        h1 {
-            color: #2b6cb0; /* Dark blue */
-            text-align: center;
-            font-weight: 500;
-        }
-
-        #searchForm {
-            max-width: 600px;
-            margin: 40px auto;
-            background: #fff; /* White background */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        #searchForm select,
-        #searchForm input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #cbd5e0; /* Light blue border */
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        #searchForm button {
-            width: 100%;
-            padding: 10px;
-            background-color: #2b6cb0; /* Dark blue */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        #searchForm button:hover {
-            background-color: #2c5282; /* Even darker blue */
-        }
-            .login-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px;
-            background-color: #FEE500; /* 카카오 로그인 버튼 색상 */
-            color: black;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }   
-
-        .login-button:hover {
-            background-color: #FCC419; /* 버튼 호버 색상 */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Search</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/index.css">
 </head>
+
 <body>
-    <h1>Player Search</h1>
-    <form id="searchForm">
-        <select name="league">
-            <option value="">Select League</option>
-            <option value="2">UEFA Champions League</option>
-            <option value="3">UEFA Europa League</option>
-            <option value="848">UEFA Europa Conference League</option>
-            <option value="39">Premier League</option>
-            <option value="140">La Liga</option>
-            <option value="61">Ligue 1</option>
-            <option value="185">Serie A</option>
-            <option value="78">Bundesliga</option>
-            <option value="253">Major League Soccer</option>
-            <option value="307">Saudi Professional League</option>
-            <option value="88">Eredivisie</option>
-            <option value="94">Primeira Liga</option>
-            <option value="292">K League</option>
-            <option value="98">J League</option>
-            <option value="17">AFC Champions League</option>
-            <option value="71">Campeonato Brasileiro Série A</option>
-        </select>
-        <input type="text" name="playerName" placeholder="Enter player name">
-        <button type="submit">Search</button>
-    </form>
-    <button class="login-button" onclick="location.href='/auth/kakao'">Login with Kakao</button>
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var playerName = this.playerName.value;
-            var leagueId = this.league.value;
-            var actionPath = '/soccer/player/' + encodeURIComponent(playerName) + '?leagueId=' + encodeURIComponent(leagueId);
-            window.location.href = actionPath;
-        });
-    </script>
+  <h1>Player Search</h1>
+  <form id="searchForm">
+    <select name="league">
+      <option value="">Select League</option>
+      <option value="2">UEFA Champions League</option>
+      <option value="3">UEFA Europa League</option>
+      <option value="848">UEFA Europa Conference League</option>
+      <option value="39">Premier League</option>
+      <option value="140">La Liga</option>
+      <option value="61">Ligue 1</option>
+      <option value="185">Serie A</option>
+      <option value="78">Bundesliga</option>
+      <option value="253">Major League Soccer</option>
+      <option value="307">Saudi Professional League</option>
+      <option value="88">Eredivisie</option>
+      <option value="94">Primeira Liga</option>
+      <option value="292">K League</option>
+      <option value="98">J League</option>
+      <option value="17">AFC Champions League</option>
+      <option value="71">Campeonato Brasileiro Série A</option>
+    </select>
+    <input type="text" name="playerName" placeholder="Enter player name">
+    <button type="submit">Search</button>
+  </form>
+  <!-- 계정 정보 아이콘과 로그인/로그아웃, 마이페이지 버튼을 포함하는 작은 박스 -->
+  <div class="account-container" id="account-container">
+    <!-- 아이콘의 ID를 'account-icon'으로 변경 -->
+    <div class="account-icon" id="account-icon" onclick="toggleAccountBox()">
+      <img src="/img/account_info.png" alt="Account Info">
+    </div>
+    <!-- 박스의 ID를 'account-box'로 유지 -->
+    <div class="account-box" id="account-box" style="display: none;">
+      <% if (!loggedIn) { %>
+      <p class="login-message">로그인하고<br>더 편리하게 이용하세요</p>
+      <button onclick="location.href='/auth/kakao'" id="btn-login">
+        <img src="/img/kakao_login_medium.png" alt="Login with Kakao" style="border: none;">
+      </button>
+      <% } else { %>
+      <button onclick="location.href='/logout'" class="btn-account btn-logout">Logout</button>
+      <button onclick="location.href='/mypage'" class="btn-account">My Page</button>
+      <% } %>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var playerName = this.playerName.value;
+      var leagueId = this.league.value;
+      var actionPath = '/soccer/player/' + encodeURIComponent(playerName) + '?leagueId=' + encodeURIComponent(leagueId);
+      window.location.href = actionPath;
+    });
+
+    function toggleAccountBox() {
+      var accountBox = document.getElementById('account-box');
+      var accountIcon = document.getElementById('account-icon');
+      if (accountBox.style.display === 'none' || accountBox.style.display === '') {
+        accountBox.style.display = 'block';
+        accountIcon.style.display = 'none';
+      } else {
+        accountBox.style.display = 'none';
+        accountIcon.style.display = 'block';
+      }
+    }
+
+    // 박스 외의 영역 클릭 시 박스 숨기기
+    window.onclick = function(event) {
+      var accountBox = document.getElementById('account-box');
+      var accountIcon = document.getElementById('account-icon');
+      if (!accountBox.contains(event.target) && !accountIcon.contains(event.target)) {
+        accountBox.style.display = 'none';
+        accountIcon.style.display = 'block';
+      }
+    }
+  </script>
 </body>
+
 </html>

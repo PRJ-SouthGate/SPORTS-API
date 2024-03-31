@@ -6,8 +6,8 @@ async function findUserById(snsId) {
 }
 
 async function createUser(user) {
-    const { email, nickname, snsId, provider } = user;
-    const [result] = await db.query('INSERT INTO users (email, nickname, snsId, provider) VALUES (?, ?, ?, ?)', [email, nickname, snsId, provider]);
+    const { nickname, snsId, provider } = user;
+    const [result] = await db.query('INSERT INTO users (nickname, snsId, provider) VALUES (?, ?, ?)', [nickname, snsId, provider]);
     return { id: result.insertId, ...user };
 }
 
