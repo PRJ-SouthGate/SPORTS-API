@@ -1,23 +1,60 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
+const passport = require("passport");
+const axios = require("axios");
+router.get("/auth/kakao", passport.authenticate("kakao"));
 
-
-router.get('/auth/kakao', passport.authenticate('kakao'));
-
-router.get('/auth/kakao/callback',
-    passport.authenticate('kakao', {
-        successRedirect: '/', // 로그인 성공 시 리다이렉트 경로
-        failureRedirect: '/', // 로그인 실패 시 리다이렉트 경로
-    }),
+router.get(
+    "/auth/kakao/callback",
+    passport.authenticate("kakao", {
+        successRedirect: "/", // 로그인 성공 시 리다이렉트 경로
+        failureRedirect: "/", // 로그인 실패 시 리다이렉트 경로
+    })
 );
 
-router.get('/logout', (req, res) => {
-    // req.logout()을 사용하여 Passport 세션을 파기하고 사용자를 로그아웃 상태로 만듭니다.
-    req.logout(() => {
-        res.redirect('/'); // 로그아웃 후 홈페이지로 리디렉션
-    });
-    // 선택적으로 사용자를 리디렉션할 경로를 지정합니다.
-    // 여기서는 홈페이지로 리디렉션하도록 설정했습니다.
+router.get("/logout", (req, res) => {
+    const kakaoLogoutUrl = `https://kauth.kakao.com/oauth/logout?client_id=${
+        process.env.KAKAO_ID
+    }&logout_redirect_uri=${encodeURIComponent(process.env.KAKAO_LOGOUT)}`;
+    res.redirect(kakaoLogoutUrl);
 });
+
+router.get("/kakao/logout", async (req, res) => {
+    console.log("logout");
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/");
+    });
+});
+// router.get("/logout", async (req, res) => {
+//     // https://kapi.kakao/com/v1/user/logout
+//     try {
+//         const ACCESS_TOKEN = req.user.accessToken;
+//         let logout = await axios({
+//             method: "post",
+//             url: "https://kapi.kakao.com/v1/user/logout",
+//             headers: {
+//                 Authorization: `Bearer ${ACCESS_TOKEN}`,
+//             },
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.json(error);
+//     }
+//     // 세션 정리
+//     req.logout(function (err) {
+//         if (err) {
+//             return next(err);
+//         }
+//         res.clearCookie("connect.sid");
+//         res.redirect("/");
+//     });
+//     req.session.destroy(() => {
+//         res.clearCookie("connect.sid");
+//         res.redirect("/");
+//     });
+// });
+
 module.exports = router;
