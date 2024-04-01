@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/mypage.css">
+</head>
+
+<body>
+  <h1>My Bookmarked Players</h1>
+  <div class="content-container">
+    <% stat.forEach(function(playerArray) { %>
+      <% playerArray.forEach(function(player) { %>
+        <div class="player-card">
+          <img src="<%= player.image %>" alt="Player Image" class="player-img">
+          <div class="player-info">
+            <h2>
+              <%= player.playerName %>
+            </h2>
+            <p>Team: <%= player.teamName %>
+            </p>
+            <p>Position: <%= player.position %>
+            </p>
+            <p>Season: <%= player.season %>
+            </p>
+            <p>Goals: <%= player.goals %>
+            </p>
+            <p>Assists: <%= player.assists %>
+            </p>
+            <p>Appearances: <%= player.appearances %>
+            </p>
+            <p>Lineups: <%= player.lineups %>
+            </p>
+            <p>Rating: <%= player.rating %>
+            </p>
+          </div>
+        </div>
+        <% }); %>
+          <% }); %>
+  </div>
+
+
+  <div class="account-container" id="account-container">
+    <div class="account-icon" id="account-icon" onclick="toggleAccountBox()">
+      <img src="/img/account_info.png" alt="Account Info">
+    </div>
+    <div class="account-box" id="account-box" style="display: none;">
+      <button onclick="location.href='/logout'" class="btn-account btn-logout">Logout</button>
+      <button onclick="location.href='/mypage'" class="btn-account">My Page</button>
+    </div>
+  </div>
+
+  <script src="/js/toggleAccountBox.js"></script>
+</body>
+
+</html>

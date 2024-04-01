@@ -3,7 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
-  <title><%= stats[0].playerName %> Profile</title>
+  <title>
+    <%= stats[0].playerName %> Profile
+  </title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/playerProfile2.css">
 </head>
@@ -42,7 +44,7 @@
   </nav>
   <!-- 검색창 동작을 위한 스크립트 -->
   <script>
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
+    document.getElementById('searchForm').addEventListener('submit', function (event) {
       event.preventDefault();
       var playerName = this.playerName.value;
       var leagueId = this.league.value;
@@ -52,14 +54,28 @@
   </script>
 
   <% stats.forEach(function(stat) { %>
-  <div class="container">
-    <div class="player-card">
-      <div class="player-top-section">
-        <div class="player-position"><%= stat.position === 'Midfielder' ? 'MID' : stat.position === 'Attacker' ? 'ATT' : stat.position === 'Defender' ? 'DEF' : 'GK' %></div>
-        <img src="<%= stat.image %>" alt="Player Image" class="player-img">
+    <div class="container">
+      <div class="player-card">
+        <div class="player-top-section">
+          <div class="player-position">
+            <%= stat.position==='Midfielder' ? 'MID' : stat.position==='Attacker' ? 'ATT' : stat.position==='Defender'
+              ? 'DEF' : 'GK' %>
+          </div>
+          <img src="<%= stat.image %>" alt="Player Image" class="player-img">
+          <!-- 북마크 버튼에 HTML 엔티티 사용 -->
+          <form action="/bookmark/add" method="post">
+            <input type="hidden" name="playerName" value="<%= playerName %>" />
+            <input type="hidden" name="leagueId" value="<%= leagueId %>" />
+            <input type="hidden" name="playerId" value="<%= stat.playerId %>" />
+            <button type="submit" class="bookmark-button">&#9733;</button>
+          </form>
+
+        </div>
       </div>
       <div class="player-info">
-        <div class="player-name"><%= stat.playerName %></div>
+        <div class="player-name">
+          <%= stat.playerName %>
+        </div>
         <div class="flag-and-logo">
           <img src="path_to_country_flag.png" alt="Country Flag" class="player-flag">
           <img src="path_to_team_logo.png" alt="Team Logo" class="team-logo">
@@ -67,25 +83,37 @@
       </div>
     </div>
 
+
+
+
     <div class="stats-container">
-      <div class="season-info">Season: <%= stat.season %></div>
+      <div class="season-info">Season: <%= stat.season %>
+      </div>
       <div class="stats-items">
         <!-- 스탯 항목들을 가로로 나열하기 위한 컨테이너 -->
         <div class="stats-item">
           <p>Appearances</p>
-          <p><%= stat.appearances %></p>
+          <p>
+            <%= stat.appearances %>
+          </p>
         </div>
         <div class="stats-item">
           <p>Goals</p>
-          <p><%= stat.goals %></p>
+          <p>
+            <%= stat.goals %>
+          </p>
         </div>
         <div class="stats-item">
           <p>Assists</p>
-          <p><%= stat.assists %></p>
+          <p>
+            <%= stat.assists %>
+          </p>
         </div>
         <div class="stats-item">
           <p>Rating</p>
-          <p><%= stat.rating %></p>
+          <p>
+            <%= stat.rating %>
+          </p>
         </div>
         <!-- 기타 스탯 추가 가능 -->
         <form action="/soccer/updatePlayerStats" method="post" class="update-stats-form">
@@ -97,11 +125,13 @@
       </div>
 
     </div>
+
+
     <!-- 기타 스탯 추가 가능 -->
 
-  </div>
-  </div>
-  <% }); %>
+    </div>
+    </div>
+    <% }); %>
 
 </body>
 
