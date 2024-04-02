@@ -11,8 +11,8 @@ app.use(express.json()); // JSON 요청 본문 처리
 app.use(express.urlencoded({ extended: true }));
 const soccerRoutes = require("./routes/soccerRoutes");
 const authRoutes = require("./routes/authRoutes");
+const myPageRoutes = require("./routes/myPageRoutes");
 
-app.use("/soccer", soccerRoutes); // 라우터 등록
 const PORT = process.env.PORT; // 포트 번호 환경 변수에서 가져오기
 app.set("views", path.join(__dirname, "./views")); // 뷰 파일 경로 설정
 app.use(express.static(path.join(__dirname, "../public"))); // public 폴더를 정적 파일로 서빙하기 위한 설정
@@ -34,7 +34,8 @@ app.use(
 app.use(passport.initialize()); //초기화
 app.use(passport.session()); //세션 사용
 app.use("", authRoutes); // 로그인용 라우터 등록
-
+app.use("/soccer", soccerRoutes); // 라우터 등록
+app.use("", myPageRoutes); // 라우터 등록
 app.get("/", function (req, res) {
     if (req.isAuthenticated()) {
         // Passport.js의 로그인 여부 확인 메서드 사용

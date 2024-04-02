@@ -3,7 +3,6 @@ const { findUserById } = require("../models/userModels/userModel");
 
 module.exports = (passport) => {
     passport.serializeUser((user, done) => {
-        console.log("serializeUser", user);
         done(null, { id: user.snsId, accessToken: user.accessToken }); // 사용자의 ID만 세션에 저장
     });
 

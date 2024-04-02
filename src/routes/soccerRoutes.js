@@ -15,7 +15,6 @@ router.get("/player/:playerName", async (req, res) => {
     // 선수 프로필 페이지 라우트
     const playerName = req.params.playerName;
     const leagueId = req.query.leagueId;
-    console.log(leagueId)
 
     try {
         const playerStats = await getPlayerStatsByName(playerName);
@@ -66,5 +65,7 @@ router.post("/updatePlayerStats", async (req, res) => {
         res.status(500).send("Error updating player stats");
     }
 });
+
+
 
 module.exports = router;
