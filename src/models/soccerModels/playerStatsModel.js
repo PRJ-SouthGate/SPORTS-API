@@ -108,7 +108,7 @@ async function getPlayerStatsByName(playerName) {
     // 플레이어 이름을 인자로 받아서 해당 플레이어의 통계를 반환하는 함수
     console.log("Get Player Stats");
     const query = `
-        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position, t.name AS teamName, p.name AS playerName, p.photo AS image
+        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position,t.logo AS teamLogo ,t.name AS teamName, p.name AS playerName, p.photo AS image
         FROM player_stats ps
         JOIN teams t ON ps.teamId = t.id
         JOIN players p ON ps.playerId = p.id
@@ -130,7 +130,7 @@ async function getPlayerStatsById(playerId) {
     // 플레이어 이름을 인자로 받아서 해당 플레이어의 통계를 반환하는 함수
     console.log("Get Player Stats");
     const query = `
-        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position, t.name AS teamName, p.name AS playerName, p.photo AS image
+        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position, t.logo AS teamLogo ,t.name AS teamName, p.name AS playerName, p.photo AS image
         FROM player_stats ps
         JOIN teams t ON ps.teamId = t.id
         JOIN players p ON ps.playerId = p.id
@@ -138,7 +138,7 @@ async function getPlayerStatsById(playerId) {
     `; // 쿼리 템플릿
     // console.log("Executing query:", query, "with playerName:", playerName);
     try {
-        const [rows, fields] = await db.query(query, [playerId]);
+        const [rows] = await db.query(query, [playerId]);
         console.log("Fetching player stats", rows);
         return rows;
     } catch (error) {

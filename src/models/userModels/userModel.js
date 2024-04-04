@@ -20,8 +20,6 @@ async function createUser(user) {
     } catch (error) {
         console.error("Error updating user", error);
     }
-
-
 }
 
 

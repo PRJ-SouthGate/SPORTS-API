@@ -13,33 +13,21 @@
   <h1>My Bookmarked Players</h1>
   <div class="content-container">
     <% stat.forEach(function(playerArray) { %>
-      <% playerArray.forEach(function(player) { %>
-        <div class="player-card">
-          <img src="<%= player.image %>" alt="Player Image" class="player-img">
-          <div class="player-info">
-            <h2>
-              <%= player.playerName %>
-            </h2>
-            <p>Team: <%= player.teamName %>
-            </p>
-            <p>Position: <%= player.position %>
-            </p>
-            <p>Season: <%= player.season %>
-            </p>
-            <p>Goals: <%= player.goals %>
-            </p>
-            <p>Assists: <%= player.assists %>
-            </p>
-            <p>Appearances: <%= player.appearances %>
-            </p>
-            <p>Lineups: <%= player.lineups %>
-            </p>
-            <p>Rating: <%= player.rating %>
-            </p>
-          </div>
-        </div>
-        <% }); %>
-          <% }); %>
+    <% playerArray.forEach(function(player) { %>
+    <div class="player-card">
+      <img src="<%= player.image %>" alt="Player Image" class="player-img">
+      <div class="player-info">
+        <h2>
+          <%= player.playerName %>
+        </h2>
+        <p>Team: <%= player.teamName %>
+        </p>
+        <p>Position: <%= player.position %>
+        </p>
+      </div>
+    </div>
+    <% }); %>
+    <% }); %>
   </div>
 
 

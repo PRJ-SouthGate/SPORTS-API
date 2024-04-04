@@ -26,7 +26,7 @@ module.exports = (passport) => {
                             provider: "kakao",
                         });
                         const tokenUser = {
-                            user: newUser,
+                            ...newUser,
                             accessToken: accessToken,
                         };
                         done(null, tokenUser);
