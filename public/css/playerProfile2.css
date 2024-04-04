@@ -1,3 +1,9 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
 .top-bar {
     display: flex;
     align-items: center;
@@ -10,6 +16,8 @@
     /* 상하단 여백 추가 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     /* 네비게이션 바에 그림자 효과 추가 */
+    justify-content: space-between;
+    /*공간 분배*/
 }
 
 .home-button img {
@@ -165,6 +173,7 @@
 }
 
 .stats-container {
+    flex: 1;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -253,9 +262,24 @@
     border: none;
     background: transparent;
     cursor: pointer;
-    color: gold; /* 별 색상을 금색으로 설정 */
-    font-size: 24px; /* 별 크기 조정 */
+    color: gold;
+    /* 별 색상을 금색으로 설정 */
+    font-size: 24px;
+    /* 별 크기 조정 */
     position: absolute;
     top: 10px;
     right: 10px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .player-card,
+    .stats-container {
+        width: 100%;
+        flex-basis: auto;
+        /* 화면 크기에 따라 조정 */
+    }
 }
