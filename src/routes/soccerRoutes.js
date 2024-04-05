@@ -10,6 +10,8 @@ const {
     insertPlayerStats
 } = require("../models/soccerModels/playerStatsModel");
 const { getPlayerIdByName } = require('../models/soccerModels/playerStatsModel');
+const { getCountryFlag } = require('../api/countryAPI')
+
 
 router.get("/player/:playerName", async (req, res) => {
     // 선수 프로필 페이지 라우트
@@ -18,13 +20,17 @@ router.get("/player/:playerName", async (req, res) => {
 
     try {
         const playerStats = await getPlayerStatsByName(playerName);
+
         if (playerStats && playerStats.length > 0) {
             // 플레이어 통계 정보가 있는 경우, 프로필 페이지 렌더링
+            //국기 가져오기
+            const flagUrl = await getCountryFlag(playerStats[0].nationality);
             res.render("playerProfile2", {
                 playerName: playerName,
                 stats: playerStats,
                 leagueId: leagueId,
                 existence: true,
+                flagUrl: flagUrl,
             });
         } else {
             // 플레이어 통계 정보가 없는 경우, 사용자에게 알림

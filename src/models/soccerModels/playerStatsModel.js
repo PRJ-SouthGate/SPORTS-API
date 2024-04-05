@@ -37,7 +37,6 @@ async function insertPlayerStats(stats) {
         INSERT INTO players (id, name, firstname, lastname, age, birth_date, nationality, height, weight, photo)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `; // 쿼리 템플릿
-    console.log("Inserting player stats", stats);
     try {
         const [result] = await db.execute(query_players, [
             playerId,
@@ -51,7 +50,7 @@ async function insertPlayerStats(stats) {
             weight,
             photo,
         ]);
-        console.log("Inserting successful", result);
+        console.log("Player Info Insertion to database successful", result);
     } catch (error) {
         console.error("Error inserting player info", error);
     }
@@ -71,9 +70,9 @@ async function insertPlayerStats(stats) {
             lineups,
             position,
         ]);
-        console.log("Inserting successful", result);
+        console.log("Player Stats Insertion to database successful", result);
     } catch (error) {
-        console.error("Error inserting player stats", error);
+        console.error("Error inserting player stats to Database", error);
     }
 }
 
@@ -91,24 +90,23 @@ async function updatePlayerStats(stats) {
             goals,
             assists,
             rating,
-            position, appearances, lineups,
+            position,
+            appearances,
+            lineups,
             playerId,
             season,
-
-
-
         ]);
-        console.log("Update successful", result);
+        console.log("Player Stats Update successful", result);
     } catch (error) {
-        console.error("Error updating player stats", error);
+        console.error("Error updating player stats at Database", error);
     }
 }
 
 async function getPlayerStatsByName(playerName) {
     // 플레이어 이름을 인자로 받아서 해당 플레이어의 통계를 반환하는 함수
-    console.log("Get Player Stats");
+
     const query = `
-        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position,t.logo AS teamLogo ,t.name AS teamName, p.name AS playerName, p.photo AS image
+        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position,t.logo AS teamLogo ,t.name AS teamName, p.name AS playerName, p.photo AS image, p.nationality AS nationality
         FROM player_stats ps
         JOIN teams t ON ps.teamId = t.id
         JOIN players p ON ps.playerId = p.id
@@ -118,19 +116,18 @@ async function getPlayerStatsByName(playerName) {
     `; // 쿼리 템플릿
     // console.log("Executing query:", query, "with playerName:", playerName);
     try {
-        const [rows, fields] = await db.query(query, [playerName]);
-        console.log("Fetching player stats", rows);
+        const [rows] = await db.query(query, [playerName]);
+        console.log("Successfully Get Player Stats from Database");
         return rows;
     } catch (error) {
-        console.error("Error fetching player stats", error);
+        console.error("Error getting player stats from Database", error);
         return null;
     }
 }
 async function getPlayerStatsById(playerId) {
     // 플레이어 이름을 인자로 받아서 해당 플레이어의 통계를 반환하는 함수
-    console.log("Get Player Stats");
     const query = `
-        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position, t.logo AS teamLogo ,t.name AS teamName, p.name AS playerName, p.photo AS image
+        SELECT ps.playerId, ps.season, ps.goals, ps.assists, ps.rating, ps.appearances, ps.lineups, ps.position, t.logo AS teamLogo ,t.name AS teamName, p.name AS playerName, p.photo AS image, p.nationality AS nationality
         FROM player_stats ps
         JOIN teams t ON ps.teamId = t.id
         JOIN players p ON ps.playerId = p.id
@@ -138,11 +135,12 @@ async function getPlayerStatsById(playerId) {
     `; // 쿼리 템플릿
     // console.log("Executing query:", query, "with playerName:", playerName);
     try {
-        const [rows] = await db.query(query, [playerId]);
-        console.log("Fetching player stats", rows);
+
+        const [rows] = await db.query(query, [playerId])
+        console.log("Successfully Get Player Stats from Database");
         return rows;
     } catch (error) {
-        console.error("Error fetching player stats", error);
+        console.error("Error getting player stats from Database", error);
         return null;
     }
 }
@@ -155,7 +153,6 @@ async function getPlayerIdByName(playerName) {
 
     try {
         const [rows] = await db.query(query, [playerName]);
-        console.log(rows);
         if (rows.length > 0) {
             return rows[0].id;
         } else {

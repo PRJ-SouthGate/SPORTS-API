@@ -1,10 +1,10 @@
 require("dotenv").config();
 const axios = require("axios");
-const { name } = require("ejs");
+//const { name } = require("ejs");
 
 // 함수를 async로 선언하여 내부에서 await 사용 가능
 async function fetchPlayerStatsByName(playerName, targetLeague) {
-    console.log("callingFetchPlayerStats");
+    console.log("Fetching Player Stats By Name");
     const options = {
         method: "GET",
         // URL을 동적으로 구성하여 playerName에 따라 다른 결과를 가져올 수 있도록 합니다.
@@ -48,17 +48,15 @@ async function fetchPlayerStatsByName(playerName, targetLeague) {
             weight: playerInfo.player.weight, // 선수의 몸무게
             photo: playerInfo.player.photo, // 선수의 사진 URL
         };
-        console.log(stats);
         return stats; // stats 객체 반환
     } catch (error) {
-        console.error("error", error);
+        console.error("Error Fetching player stats via API", error);
         throw error; // 에러를 적절히 처리하거나, 필요에 따라 상위로 전파
     }
 }
 
 async function fetchPlayerStatsById(playerId, targetLeague) {
-    console.log("FetchingPlayerStatsByID");
-    console.log(playerId, targetLeague);
+    console.log("Fetching Player Stats By ID");
     const options = {
         method: 'GET',
         url: process.env.API_URL,
@@ -69,13 +67,12 @@ async function fetchPlayerStatsById(playerId, targetLeague) {
         },
         headers: {
             'X-RapidAPI-Key': process.env.API_KEY, // 환경 변수에서 API 키를 가져옵니다.
-            'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+            'X-RapidAPI-Host': process.env.API_HOST,
         }
     };
 
     try {
         const response = await axios.request(options);
-        console.log(response.data); // 전체 응답을 로그로 출력
         const playerInfo = response.data.response[0]; // 선수 정보에 접근
         const statistics = playerInfo.statistics[0]; // 리그의 통계 정보에 접근
         const stats = {
@@ -103,10 +100,10 @@ async function fetchPlayerStatsById(playerId, targetLeague) {
             weight: playerInfo.player.weight, // 선수의 몸무게
             photo: playerInfo.player.photo, // 선수의 사진 URL
         };
-        console.log(stats);
+
         return stats; // stats 객체 반환
     } catch (error) {
-        console.error("error", error);
+        console.error("Error Fetching player stats via API", error);
         throw error; // 에러를 적절히 처리하거나, 필요에 따라 상위로 전파
     }
 }

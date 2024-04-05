@@ -17,15 +17,12 @@
     </a>
     <div class="search-container">
       <form id="searchForm">
-        <select name="league" class="league-dropdown">
+        <select required name="league" class="league-dropdown">
           <option value="">Select League</option>
-          <option value="2">UEFA Champions League</option>
-          <option value="3">UEFA Europa League</option>
-          <option value="848">UEFA Europa Conference League</option>
           <option value="39">Premier League</option>
           <option value="140">La Liga</option>
           <option value="61">Ligue 1</option>
-          <option value="185">Serie A</option>
+          <option value="135">Serie A</option>
           <option value="78">Bundesliga</option>
           <option value="253">Major League Soccer</option>
           <option value="307">Saudi Professional League</option>
@@ -33,10 +30,9 @@
           <option value="94">Primeira Liga</option>
           <option value="292">K League</option>
           <option value="98">J League</option>
-          <option value="17">AFC Champions League</option>
           <option value="71">Campeonato Brasileiro Série A</option>
         </select>
-        <input type="text" placeholder="Search for players..." name="playerName">
+        <input required type="text" placeholder="Search for players..." name="playerName">
 
         <button type="submit">Search</button>
       </form>
@@ -57,7 +53,17 @@
   <div class="container">
     <div class="player-card">
       <div class="player-top-section">
-        <div class="player-position"><%= stat.position %></div>
+        <div class="player-position">
+          <% if (stat.position === 'Attacker') { %>
+          ATT
+          <% } else if (stat.position === 'Midfielder') { %>
+          MID
+          <% } else if (stat.position === 'Defender') { %>
+          DEF
+          <% } else if (stat.position === 'Goalkeeper') { %>
+          GK
+          <% } %>
+        </div>
         <img src="<%= stat.image %>" alt="Player Image" class="player-img">
         <!-- 북마크 버튼 -->
         <form action="/bookmark/add" method="post" class="bookmark-form">
@@ -69,7 +75,7 @@
           <%= stat.playerName %>
         </div>
         <div class="flag-and-logo">
-          <img src="path_to_country_flag.png" alt="Country Flag" class="player-flag">
+          <img src="<%= flagUrl %>" alt="Country Flag" class="player-flag">
           <img src="<%= stat.teamLogo %>" alt="Team Logo" class="team-logo">
         </div>
       </div>
