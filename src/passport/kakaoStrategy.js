@@ -6,7 +6,7 @@ module.exports = (passport) => {
         new KakaoStrategy(
             {
                 clientID: process.env.KAKAO_ID, //kakao에서 발급해주는 id, .env 파일 생성후 KAKAO_ID:카카오에서 발급해준 api 를 추가해주면 된다.
-                callbackURL: "/auth/kakao/callback", //인증결과를 받는 라우터이다.
+                callbackURL: process.env.KAKAO_URL, //인증결과를 받는 라우터이다.
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
