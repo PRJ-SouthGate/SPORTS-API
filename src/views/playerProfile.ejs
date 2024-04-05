@@ -7,7 +7,7 @@
     <%= stats[0].playerName %> Profile
   </title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/playerProfile2.css">
+  <link rel="stylesheet" href="/css/playerProfile.css">
 </head>
 
 <body>
@@ -65,10 +65,16 @@
           <% } %>
         </div>
         <img src="<%= stat.image %>" alt="Player Image" class="player-img">
-        <!-- 북마크 버튼 -->
-        <form action="/bookmark/add" method="post" class="bookmark-form">
-          <button type="submit" class="bookmark-button">&#9733;</button>
-        </form>
+        <% if (typeof user !== 'undefined') { %>
+          <form action="/bookmark/add" method="post" class="bookmark-form">
+            <input type="hidden" name="playerName" value="<%= playerName %>" />
+            <input type="hidden" name="leagueId" value="<%= leagueId %>" />
+            <input type="hidden" name="playerId" value="<%= stat.playerId %>" />
+            <button type="submit" class="bookmark-button">&#9733;</button>
+          </form>
+        <% } else { %>
+          <button onclick="location.href='/auth/kakao'" class="bookmark-button">&#9733;</button>
+        <% } %>
       </div>
       <div class="player-info">
         <div class="player-name">
@@ -100,9 +106,16 @@
         </div>
         <div class="stats-item">
           <p>Assists</p>
-          <p>
-            <%= stat.assists %>
-          </p>
+          <% if (stat.assists !== null) { %>
+            <p>
+              <%= stat.assists %>
+            </p>
+          <% } else { %>
+            <p>
+              0
+            </p>
+          <% } %>
+          
         </div>
         <div class="stats-item">
           <p>Rating</p>
